@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		id="org.apache.cordova.gps"
+		version="0.0.1">
+	<name>GPS tracker</name>
+	<description>GPS tracker Cordova 3.x.x</description>
+	<repo>https://github.com/OlexandrPopov/cordova-gps-tracker.git</repo>
+	<keywords>ios, wp8, android</keywords>
+	<license>Apache 2.0</license>
+	<author>Alexander Popov</author>
+
+	<engines>
+		<engine name="cordova" version=">=3.0.0" />
+	</engines>
+
+	<js-module src="www/GpsTracker.js" name="GpsTracker">
+		<clobbers target="window.GpsTracker" />
+	</js-module>
+
+	<!-- android -->
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="org.apache.cordova.gps.GpsTracker">
+				<param name="android-package" value="org.apache.cordova.gps.GpsTracker" />
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+		</config-file>
+
+		<source-file src="src/android/GpsTracker.java" target-dir="src/org/apache/cordova/gps" />
+		<source-file src="src/android/GpsService.java" target-dir="src/org/apache/cordova/gps" />
+	</platform>
+
+	<!-- wp8 -->
+	<platform name="wp8">
+		<config-file target="config.xml" parent="/*">
+			<feature name="org.apache.cordova.gps.GpsTracker">
+				<param name="wp-package" value="org.apache.cordova.gps.GpsTracker"/>
+			</feature>
+		</config-file>
+
+		<config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Tasks/DefaultTask">
+			<BackgroundExecution>
+				<ExecutionType Name="LocationTracking" />
+			</BackgroundExecution>
+		</config-file>
+
+		<config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+			<Capability Name="ID_CAP_LOCATION" />
+		</config-file>
+
+		<source-file src="src/wp8/GpsTracker.cs" />
+	</platform>
+</plugin>
